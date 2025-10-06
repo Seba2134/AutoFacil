@@ -13,5 +13,4 @@ data class Auto (
     val disponible: Boolean = true,
     val fotoUrl: String? = null)
 {
-
     }
