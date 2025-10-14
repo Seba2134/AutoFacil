@@ -17,7 +17,6 @@ import com.project.autofacil.navigation.Screen
 @Composable
 fun HomeScreen(navController: NavController) {
 
-    // Estado del drawer (menú lateral)
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
@@ -27,7 +26,6 @@ fun HomeScreen(navController: NavController) {
             ModalDrawerSheet(
                 modifier = Modifier.fillMaxHeight(),
                 drawerContainerColor = MaterialTheme.colorScheme.surface,
-                // Simula el menú abriéndose hacia la derecha
                 drawerTonalElevation = 12.dp
             ) {
                 Text(
@@ -67,20 +65,14 @@ fun HomeScreen(navController: NavController) {
                 )
             }
         ) { padding ->
-            Column(
+            // Contenido principal sin botones visibles
+            Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(padding),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                contentAlignment = Alignment.Center
             ) {
-                Text("Bienvenido a AutoFácil")
-                Spacer(Modifier.height(20.dp))
-                Button(onClick = {
-                    navController.navigate(Screen.Registro.route)
-                }) {
-                    Text("Ir a Registro")
-                }
+                Text("Bienvenido a AutoFácil", style = MaterialTheme.typography.titleLarge)
             }
         }
     }
