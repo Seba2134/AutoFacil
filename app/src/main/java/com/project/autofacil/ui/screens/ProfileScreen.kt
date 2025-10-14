@@ -64,7 +64,7 @@ fun ProfileScreen(
                 .padding(innerPadding)
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Top
         ){
             Text("Perfil")
         }

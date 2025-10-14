@@ -1,94 +1,87 @@
 package com.project.autofacil.ui.screens
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.Button
-import androidx.compose.material3.DrawerState
-import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.ModalDrawerSheet
-import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.NavigationDrawerItem
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.rememberDrawerState
-import androidx.compose.material3.rememberTopAppBarState
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.project.autofacil.ViewModels.MainViewModel
-import com.project.autofacil.navigation.Screen
 import kotlinx.coroutines.launch
+import com.project.autofacil.navigation.Screen
 
-
-@OptIn(ExperimentalMaterial3Api:: class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(
-    navController: NavController,
-    viewModel: MainViewModel = viewModel()
-){
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+fun HomeScreen(navController: NavController) {
+
+    // Estado del drawer (menú lateral)
+    val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            ModalDrawerSheet {
-                Text("Menú", modifier = Modifier.padding(16.dp))
+            ModalDrawerSheet(
+                modifier = Modifier.fillMaxHeight(),
+                drawerContainerColor = MaterialTheme.colorScheme.surface,
+                // Simula el menú abriéndose hacia la derecha
+                drawerTonalElevation = 12.dp
+            ) {
+                Text(
+                    text = "Menú",
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.padding(16.dp)
+                )
+                HorizontalDivider()
+                Spacer(Modifier.height(8.dp))
+
                 NavigationDrawerItem(
-                    label = {Text("Ir a perfil")},
+                    label = { Text("Registro") },
                     selected = false,
                     onClick = {
                         scope.launch { drawerState.close() }
-                        viewModel.navigateTo(Screen.Profile)
+                        navController.navigate(Screen.Registro.route)
                     }
                 )
             }
-        }
-
+        },
+        gesturesEnabled = true
     ) {
         Scaffold(
-            topBar={
+            topBar = {
                 TopAppBar(
-                    title = {Text("Pantalla Home")},
+                    title = { Text("AutoFácil") },
                     navigationIcon = {
                         IconButton(onClick = {
-                            scope.launch { drawerState.open() }
+                            scope.launch {
+                                if (drawerState.isClosed) drawerState.open()
+                                else drawerState.close()
+                            }
                         }) {
-                            Icon(Icons.Default.Menu, contentDescription = "Menú")
+                            Icon(Icons.Default.Menu, contentDescription = "Abrir menú")
                         }
                     }
                 )
             }
-        ){  innerPadding ->
+        ) { padding ->
             Column(
                 modifier = Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .padding(padding),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
-
-            ){
-                Text("AutoFacil")
-                Spacer(modifier = Modifier.height(16.dp))
-                Button(onClick = {viewModel.navigateTo(Screen.Settings)}) {
-                    Text("Ir a configuración")
+            ) {
+                Text("Bienvenido a AutoFácil")
+                Spacer(Modifier.height(20.dp))
+                Button(onClick = {
+                    navController.navigate(Screen.Registro.route)
+                }) {
+                    Text("Ir a Registro")
                 }
             }
-
         }
     }
 }

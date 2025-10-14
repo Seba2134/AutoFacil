@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 
 @Entity(tableName = "Cotizaciones")
-class Cotizacion (
+data class Cotizacion (
     @PrimaryKey(autoGenerate = true) val idCotizacion: Int = 0,
     val rutCliente: String,
     val idAuto: Int,

@@ -1,12 +1,12 @@
 package com.project.autofacil.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.project.autofacil.ViewModels.UsuarioViewModel
+import com.project.autofacil.ui.screens.HomeScreen
 import com.project.autofacil.ui.screens.registroScreen
 import com.project.autofacil.ui.screens.resumenScreen
 
@@ -21,12 +21,15 @@ fun appNavigation(){
 
     NavHost(
         navController = navController,
-        startDestination = "Registro"
+        startDestination = Screen.Home.route
     ){
-        composable("Registro"){
+        composable(Screen.Home.route){
+            HomeScreen(navController)
+        }
+        composable(Screen.Registro.route){
             registroScreen(navController, usuarioViewModel)
         }
-        composable("Resumen"){
+        composable(Screen.Resumen.route){
             resumenScreen(usuarioViewModel)
         }
     }

@@ -1,6 +1,5 @@
 package com.project.autofacil.navigation
 
-import android.health.connect.datatypes.ExerciseRoute
 
 sealed class NavigationEvent {
 
