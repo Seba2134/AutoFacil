@@ -30,7 +30,7 @@ fun appNavigation(){
             registroScreen(navController, usuarioViewModel)
         }
         composable(Screen.Resumen.route){
-            resumenScreen(usuarioViewModel)
+            resumenScreen(usuarioViewModel, navController)
         }
     }
 
