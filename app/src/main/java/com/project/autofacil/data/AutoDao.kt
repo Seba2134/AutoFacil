@@ -10,6 +10,9 @@ interface AutoDao {
     @Query("SELECT * FROM autos")
     suspend fun obtenerTodos(): List<AutoEntity>
 
+    @Query("SELECT COUNT(*) FROM autos")
+    suspend fun contarAutos(): Int
+
     @Delete
     suspend fun eliminar(auto: AutoEntity)
 }
