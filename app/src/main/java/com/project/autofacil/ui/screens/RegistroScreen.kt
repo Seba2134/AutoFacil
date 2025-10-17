@@ -22,6 +22,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.project.autofacil.ViewModels.UsuarioViewModel
+import com.project.autofacil.navigation.Screen
 
 
 @Composable
@@ -101,15 +102,23 @@ fun registroScreen(
             Text("Acepto los términos y condiciones")
         }
         //Boton enviar
-        Button(
-            onClick = {
-                if(viewModel.validarFormulario()){
-                    navController.navigate("Resumen")
-                }
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
+        Button(onClick = {
+            val esValido = viewModel.validarFormulario()
+            if (esValido) {
+                // Guardar en Room
+                viewModel.registrarUsuario(
+                    nombre = estado.nombre,
+                    correo = estado.correo,
+                    contrasena = estado.clave,
+                    direccion = estado.direccion
+                )
+
+                // Navegar a la pantalla de resumen
+                navController.navigate(Screen.Resumen.route)
+            }
+        }) {
             Text("Registrar")
         }
+
     }
 }

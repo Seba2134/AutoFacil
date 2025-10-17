@@ -44,6 +44,14 @@ fun HomeScreen(navController: NavController) {
                         navController.navigate(Screen.Registro.route)
                     }
                 )
+                NavigationDrawerItem(
+                    label = { Text("Perfil") },
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        navController.navigate(Screen.Profile.route)
+                    }
+                )
             }
         },
         gesturesEnabled = true

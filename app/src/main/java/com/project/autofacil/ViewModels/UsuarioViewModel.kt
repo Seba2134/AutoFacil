@@ -6,8 +6,13 @@ import com.project.autofacil.Model.UsuarioUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import androidx.lifecycle.viewModelScope
+import com.project.autofacil.data.UsuarioDao
+import com.project.autofacil.data.UsuarioEntity
+import kotlinx.coroutines.launch
 
-class UsuarioViewModel: ViewModel() {
+class UsuarioViewModel(
+    private val usuarioDao: UsuarioDao): ViewModel() {
 
     //Estado interno mutable
     private val _estado = MutableStateFlow(UsuarioUiState())
@@ -58,6 +63,17 @@ class UsuarioViewModel: ViewModel() {
         _estado.update { it.copy(errores = errores) }
         return !hayErrores
     }
+    fun registrarUsuario(nombre: String, correo: String, contrasena: String, direccion: String) {
+        viewModelScope.launch {
+            val nuevoUsuario = UsuarioEntity(
+                nombre = nombre,
+                correo = correo,
+                contrasena = contrasena,
+                direccion = direccion
+            )
+            usuarioDao.registrar(nuevoUsuario)
+        }
+    }
 
 
-}
+    }

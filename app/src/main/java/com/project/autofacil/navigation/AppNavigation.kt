@@ -7,12 +7,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.project.autofacil.ViewModels.UsuarioViewModel
 import com.project.autofacil.ui.screens.HomeScreen
+import com.project.autofacil.ui.screens.ProfileScreen
 import com.project.autofacil.ui.screens.registroScreen
 import com.project.autofacil.ui.screens.resumenScreen
 
 
 @Composable
-fun appNavigation(){
+fun appNavigation(usuaruiViewModel: UsuarioViewModel){
 
 
     val navController = rememberNavController()
@@ -32,6 +33,9 @@ fun appNavigation(){
         composable(Screen.Resumen.route){
             resumenScreen(usuarioViewModel, navController)
         }
+        composable(Screen.Profile.route){
+            ProfileScreen(navController= navController,
+                            viewModel= usuarioViewModel)
     }
-
+}
 }
