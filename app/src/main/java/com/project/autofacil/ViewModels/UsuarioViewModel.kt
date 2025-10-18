@@ -2,12 +2,14 @@ package com.project.autofacil.ViewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.project.autofacil.Model.Cliente
 import com.project.autofacil.Model.UsuarioErrores
 import com.project.autofacil.Model.UsuarioUiState
 import com.project.autofacil.data.UsuarioDao
 import com.project.autofacil.data.UsuarioEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -17,6 +19,11 @@ class UsuarioViewModel(
 
     private val _estado = MutableStateFlow(UsuarioUiState())
     val estado: StateFlow<UsuarioUiState> = _estado
+    private val _cliente = MutableStateFlow<Cliente?>(null)
+
+    // Propiedad pública de solo lectura para que las pantallas (Vistas) la observen.
+    // Esta es la propiedad 'cliente' que resuelve tu error.
+    val cliente: StateFlow<Cliente?> = _cliente.asStateFlow()
 
     fun onNombreChange(valor: String) {
         _estado.update { it.copy(nombre = valor, errores = it.errores.copy(nombre = null)) }
@@ -64,7 +71,18 @@ class UsuarioViewModel(
                 contrasena = contrasena,
                 direccion = direccion
             )
-            usuarioDao.registrar(nuevoUsuario)
+            // Inserta en la base de datos y obtiene el ID generado
+            val nuevoId = usuarioDao.registrar(nuevoUsuario)
+
+            _cliente.value = Cliente(
+                idCliente = nuevoId.toInt(),
+                nombre = nombre,
+                rut = "Sin RUT",      // Usa el nombre de parámetro correcto
+                telefono = "Sin Teléfono", // Usa el nombre de parámetro correcto
+                email = correo,       // Usa el nombre de parámetro correcto
+                password = contrasena,// Usa el nombre de parámetro correcto
+                rol = "cliente"
+            )
         }
     }
 }

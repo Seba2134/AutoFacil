@@ -11,6 +11,10 @@ import com.project.autofacil.ui.screens.HomeScreen
 import com.project.autofacil.ui.screens.ProfileScreen
 import com.project.autofacil.ui.screens.registroScreen
 import com.project.autofacil.ui.screens.resumenScreen
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
+import com.project.autofacil.ui.screens.AutoDetailScreen
+import com.project.autofacil.ui.screens.CotizacionScreen
 
 @Composable
 fun appNavigation(usuarioViewModel: UsuarioViewModel, autoViewModel: AutoViewModel) {
@@ -21,7 +25,7 @@ fun appNavigation(usuarioViewModel: UsuarioViewModel, autoViewModel: AutoViewMod
         startDestination = Screen.Home.route
     ) {
         composable(Screen.Home.route) {
-            AutosScreen(autoViewModel = autoViewModel)
+            AutosScreen(navController = navController, autoViewModel = autoViewModel)
         }
         composable(Screen.Registro.route) {
             registroScreen(navController, usuarioViewModel)
@@ -31,6 +35,39 @@ fun appNavigation(usuarioViewModel: UsuarioViewModel, autoViewModel: AutoViewMod
         }
         composable(Screen.Profile.route) {
             ProfileScreen(navController = navController, viewModel = usuarioViewModel)
+        }
+        composable(
+            route = Screen.AutoDetail.route, // Ruta: "auto_detail_screen/{autoId}"
+            arguments = listOf(navArgument("autoId") { // Definimos que esperamos un argumento
+                type = NavType.StringType // El argumento es de tipo String
+                nullable = true // Opcional: puede ser nulo, aunque no debería
+            })
+        ) { backStackEntry ->
+            // Obtenemos el argumento 'autoId' que nos llega por la URL
+            val autoId = backStackEntry.arguments?.getString("autoId")
+
+            // Llamamos a la pantalla de detalles, pasándole los datos necesarios
+            AutoDetailScreen(
+                navController = navController,
+                autoViewModel = autoViewModel,
+                autoId = autoId
+            )
+        }
+        composable(
+            route = Screen.CotizacionScreen.route, // Ruta: "cotizacion_screen/{autoId}"
+            arguments = listOf(navArgument("autoId") { // Definimos el argumento 'autoId'
+                type = NavType.StringType
+            })
+        ) { backStackEntry ->
+            // Obtenemos el argumento 'autoId' de la URL
+            val autoId = backStackEntry.arguments?.getString("autoId") ?: "0"
+            // Llamamos al Composable de CotizacionScreen, pasándole los ViewModels y el ID.
+            CotizacionScreen(
+                navController = navController,
+                autoViewModel = autoViewModel,
+                usuarioViewModel = usuarioViewModel,
+                autoId = autoId
+            )
         }
     }
 }

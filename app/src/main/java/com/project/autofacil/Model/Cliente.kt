@@ -12,8 +12,4 @@ data class Cliente(
     val email: String,
     val password: String,
     val rol: String //admnin o cliente
-) {
-
-
-
-}
+)

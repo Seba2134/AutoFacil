@@ -11,5 +11,12 @@ sealed class Screen(val route: String) {
     data object Resumen: Screen("Resumen")
 
     data object AutosScreen: Screen("AutosScreen")
+    data object AutoDetail : Screen("auto_detail_screen/{autoId}") {
+        fun createRoute(autoId: String) = "auto_detail_screen/$autoId"
+    }
+    data object CotizacionScreen: Screen("cotizacion_screen/{autoId}") {
+        fun createRoute(autoId: String) = "cotizacion_screen/$autoId"
+    }
+
 
 }

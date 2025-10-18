@@ -10,7 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Database(
-    entities = [AutoEntity::class, UsuarioEntity::class],
+    entities = [AutoEntity::class, UsuarioEntity::class, CotizacionEntity::class],
     version = 10, // 🔺Aumenta la versión para aplicar los nuevos campos
     exportSchema = false
 )
