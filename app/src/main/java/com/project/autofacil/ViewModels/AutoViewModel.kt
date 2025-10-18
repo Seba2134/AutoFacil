@@ -15,7 +15,8 @@ class AutoViewModel(private val autoDao: AutoDao) : ViewModel() {
 
     fun cargarAutos() {
         viewModelScope.launch {
-            _autos.value = autoDao.obtenerTodos()
+            val lista = autoDao.obtenerTodos()
+            _autos.value = lista
         }
     }
 }

@@ -23,18 +23,16 @@ import com.project.autofacil.ViewModels.AutoViewModel
 fun AutosScreen(autoViewModel: AutoViewModel) {
     val autos by autoViewModel.autos.collectAsState()
 
-    // 🔹 Llamamos al cargar la pantalla
+    // Llamamos a cargarAutos cuando se entra a la pantalla
     LaunchedEffect(Unit) {
         autoViewModel.cargarAutos()
     }
 
-    // 🔹 Si no hay autos aún, muestra texto temporal
     if (autos.isEmpty()) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text("Cargando autos...", style = MaterialTheme.typography.titleMedium)
         }
     } else {
-        // 🔹 Pantalla con barra y grilla
         Scaffold(
             topBar = {
                 CenterAlignedTopAppBar(

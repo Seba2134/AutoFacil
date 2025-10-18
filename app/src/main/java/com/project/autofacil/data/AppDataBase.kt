@@ -1,6 +1,7 @@
 package com.project.autofacil.data
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -10,7 +11,7 @@ import kotlinx.coroutines.launch
 
 @Database(
     entities = [AutoEntity::class, UsuarioEntity::class],
-    version = 4, // 🔺Aumenta la versión para aplicar los nuevos campos
+    version = 10, // 🔺Aumenta la versión para aplicar los nuevos campos
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -55,6 +56,8 @@ abstract class AppDatabase : RoomDatabase() {
 
 // ✅ Esta función va *fuera* de la clase AppDatabase
 suspend fun prepopulate(autoDao: AutoDao) {
+    Log.d("ROOM_DEBUG", "Ejecutando prepopulate()...")
+
     val autos = listOf(
         AutoEntity(
             marca = "Toyota",
@@ -94,5 +97,16 @@ suspend fun prepopulate(autoDao: AutoDao) {
         )
     )
 
-    autos.forEach { autoDao.insertar(it) }
+    try {
+        autos.forEach {
+            Log.d("ROOM_DEBUG", "Insertando auto: ${it.marca}")
+            autoDao.insertar(it)
+        }
+
+        val count = autoDao.contarAutos()
+        Log.d("ROOM_DEBUG", "Total autos en DB después del prepopulate(): $count")
+    } catch (e: Exception) {
+        Log.e("ROOM_DEBUG", "Error al insertar autos: ${e.message}")
+        e.printStackTrace()
+    }
 }

@@ -1,9 +1,13 @@
 package com.project.autofacil.data
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 
 @Dao
 interface AutoDao {
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertar(auto: AutoEntity)
 
@@ -12,7 +16,4 @@ interface AutoDao {
 
     @Query("SELECT COUNT(*) FROM autos")
     suspend fun contarAutos(): Int
-
-    @Delete
-    suspend fun eliminar(auto: AutoEntity)
 }
