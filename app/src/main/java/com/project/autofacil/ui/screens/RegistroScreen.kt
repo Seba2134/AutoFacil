@@ -103,20 +103,19 @@ fun registroScreen(
         }
         //Boton enviar
         Button(onClick = {
-            val esValido = viewModel.validarFormulario()
-            if (esValido) {
-                // Guardar en Room
+            val esFormularioValido = viewModel.validarFormulario()
+            if (esFormularioValido && estado.aceptaTerminos) {
                 viewModel.registrarUsuario(
                     nombre = estado.nombre,
                     correo = estado.correo,
                     contrasena = estado.clave,
                     direccion = estado.direccion
                 )
-
-                // Navegar a la pantalla de resumen
                 navController.navigate(Screen.Resumen.route)
             }
-        }) {
+        },
+            enabled = estado.aceptaTerminos
+        ) {
             Text("Registrar")
         }
 

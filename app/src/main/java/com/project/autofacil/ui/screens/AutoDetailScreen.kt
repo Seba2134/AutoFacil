@@ -79,7 +79,7 @@ fun DetalleAutoContent(auto: Auto, navController: NavController, autoId: String)
     ) {
         Image(
             painter = rememberAsyncImagePainter(
-                model = auto.fotoUrl,
+                model = auto.fotoId,
                 placeholder = painterResource(id = R.drawable.placeholder_car),
                 error = painterResource(id = R.drawable.placeholder_car)
             ),

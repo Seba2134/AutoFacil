@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.project.autofacil.R // Asegúrate de tener un ícono de perfil en tus recursos
+import com.project.autofacil.R
 import com.project.autofacil.ViewModels.UsuarioViewModel
 import com.project.autofacil.navigation.Screen
 

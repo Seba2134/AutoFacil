@@ -123,7 +123,7 @@ fun AutosScreen(navController: NavController, autoViewModel: AutoViewModel) {
                             modelo = autoEntity.modelo,
                             anio = autoEntity.anio,
                             precio = autoEntity.precio,
-                            fotoUrl = autoEntity.fotoUrl,
+                            fotoId = autoEntity.fotoId,
                             kilometraje = autoEntity.kilometraje
                         )
 
@@ -157,16 +157,12 @@ fun AutoCard(
             modifier = Modifier.fillMaxWidth()
         ) {
             Image(
-                painter = rememberAsyncImagePainter(
-                    model = auto.fotoUrl,
-                    placeholder = painterResource(id = R.drawable.placeholder_car),
-                    error = painterResource(id = R.drawable.placeholder_car)
-                ),
+                painter = painterResource(id = auto.fotoId), // 'fotoId' es el ID del drawable
                 contentDescription = "${auto.marca} ${auto.modelo}",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(120.dp) // Le damos una altura fija a la imagen
+                    .height(120.dp)
             )
 
             // Contenedor para el texto y el botón

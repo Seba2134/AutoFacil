@@ -8,6 +8,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import com.project.autofacil.R
 
 @Database(
     entities = [AutoEntity::class, UsuarioEntity::class, CotizacionEntity::class],
@@ -66,7 +67,7 @@ suspend fun prepopulate(autoDao: AutoDao) {
             kilometraje = 34000,
             precio = 12500000,
             disponible = true,
-            fotoUrl = "https://cdn.motor1.com/images/mgl/p7Wey/s1/toyota-corolla-2021.jpg"
+            fotoId = R.drawable.toyota_corolla_xli_2021
         ),
         AutoEntity(
             marca = "Mazda",
@@ -75,7 +76,7 @@ suspend fun prepopulate(autoDao: AutoDao) {
             kilometraje = 21000,
             precio = 15490000,
             disponible = true,
-            fotoUrl = "https://cdn.motor1.com/images/mgl/7e94x/s1/mazda3-sport-2022.jpg"
+            fotoId = R.drawable.mazda_3_sport_2022
         ),
         AutoEntity(
             marca = "Suzuki",
@@ -84,7 +85,7 @@ suspend fun prepopulate(autoDao: AutoDao) {
             kilometraje = 8000,
             precio = 17900000,
             disponible = true,
-            fotoUrl = "https://cdn.motor1.com/images/mgl/pj0Pp/s1/suzuki-swift-sport-2023.jpg"
+            fotoId = R.drawable.suzuki_swift_2023
         ),
         AutoEntity(
             marca = "Kia",
@@ -93,7 +94,7 @@ suspend fun prepopulate(autoDao: AutoDao) {
             kilometraje = 56000,
             precio = 11200000,
             disponible = false,
-            fotoUrl = "https://cdn.motor1.com/images/mgl/1LmeN/s1/kia-rio-2020-sedan.jpg"
+            fotoId = R.drawable.kia_rio_sedan_2020
         )
     )
 

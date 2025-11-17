@@ -37,7 +37,7 @@ class AutoViewModel(private val autoDao: AutoDao) : ViewModel() {
                         modelo = it.modelo,
                         anio = it.anio,
                         precio = it.precio,
-                        fotoUrl = it.fotoUrl,
+                        fotoId = it.fotoId,
                         kilometraje = it.kilometraje
                     )
                     // --- FIN DE LA CORRECCIÓN ---

@@ -12,5 +12,5 @@ data class AutoEntity(
     val kilometraje: Int = 0,
     val precio: Int,
     val disponible: Boolean = true,
-    val fotoUrl: String? = null
+    val fotoId: Int
 )
