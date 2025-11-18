@@ -16,7 +16,7 @@
         android:theme="@style/Theme.AutoFacil">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDNUriO0b0hYgO4r-Z5WsyBJRcZdLgPERQ" />
+            android:value="AIzaSyAkfkfLpNCabTgD_DQ015DWqDgTsdB2l50" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
