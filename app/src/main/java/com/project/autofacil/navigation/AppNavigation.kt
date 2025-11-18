@@ -15,6 +15,7 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.project.autofacil.ui.screens.AutoDetailScreen
 import com.project.autofacil.ui.screens.CotizacionScreen
+import com.project.autofacil.ui.screens.MapaScreen
 
 @Composable
 fun appNavigation(usuarioViewModel: UsuarioViewModel, autoViewModel: AutoViewModel) {
@@ -68,6 +69,9 @@ fun appNavigation(usuarioViewModel: UsuarioViewModel, autoViewModel: AutoViewMod
                 usuarioViewModel = usuarioViewModel,
                 autoId = autoId
             )
+        }
+        composable(Screen.Mapa.route) {
+            MapaScreen()
         }
     }
 }

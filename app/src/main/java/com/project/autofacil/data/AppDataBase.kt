@@ -9,10 +9,11 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import com.project.autofacil.R
+import kotlinx.coroutines.Dispatchers
 
 @Database(
     entities = [AutoEntity::class, UsuarioEntity::class, CotizacionEntity::class],
-    version = 10, // 🔺Aumenta la versión para aplicar los nuevos campos
+    version = 10, // Aumenta la versión para aplicar los nuevos campos
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -23,7 +24,6 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null
-
         fun getDatabase(context: Context, scope: CoroutineScope): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -31,7 +31,8 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "autofacil_db"
                 )
-                    .fallbackToDestructiveMigration() // Borra y recrea si cambia la estructura
+                    .fallbackToDestructiveMigration()
+                    // --- CORRECCIÓN 1: Pasar el 'scope' al Callback ---
                     .addCallback(AppDatabaseCallback(scope))
                     .build()
                 INSTANCE = instance
@@ -39,15 +40,17 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
     }
-
-    // 🔹 Callback que se ejecuta solo al crear la base por primera vez
     private class AppDatabaseCallback(
+        // El 'context' no se estaba usando, así que lo quitamos para limpiar.
+        // Solo necesitamos el scope.
         private val scope: CoroutineScope
     ) : RoomDatabase.Callback() {
+
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
             INSTANCE?.let { database ->
-                scope.launch {
+                scope.launch(Dispatchers.IO) {
+                    // --- CORRECCIÓN 2: Llamar a la función con el nombre correcto ---
                     prepopulate(database.autoDao())
                 }
             }
@@ -55,7 +58,6 @@ abstract class AppDatabase : RoomDatabase() {
     }
 }
 
-// ✅ Esta función va *fuera* de la clase AppDatabase
 suspend fun prepopulate(autoDao: AutoDao) {
     Log.d("ROOM_DEBUG", "Ejecutando prepopulate()...")
 

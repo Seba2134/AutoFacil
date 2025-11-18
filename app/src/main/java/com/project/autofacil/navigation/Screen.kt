@@ -18,5 +18,6 @@ sealed class Screen(val route: String) {
         fun createRoute(autoId: String) = "cotizacion_screen/$autoId"
     }
 
+    data object Mapa : Screen("mapa_screen")
 
 }

@@ -41,7 +41,8 @@ android {
 }
 
 dependencies {
-
+    implementation("com.google.maps.android:maps-compose:4.3.3") // Librería para usar Google Maps en Compose
+    implementation("com.google.android.gms:play-services-maps:18.2.0") // Servicios de Google
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

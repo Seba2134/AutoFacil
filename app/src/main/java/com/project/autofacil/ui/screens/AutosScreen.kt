@@ -69,6 +69,14 @@ fun AutosScreen(navController: NavController, autoViewModel: AutoViewModel) {
                         navController.navigate(Screen.Profile.route)
                     }
                 )
+                NavigationDrawerItem(
+                    label = { Text("Sucursales cercanas") },
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        navController.navigate(Screen.Mapa.route)
+                    }
+                )
             }
         },
         gesturesEnabled = true
