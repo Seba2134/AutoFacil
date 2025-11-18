@@ -13,8 +13,11 @@ import com.project.autofacil.ui.screens.registroScreen
 import com.project.autofacil.ui.screens.resumenScreen
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import com.project.autofacil.ui.screens.AgregarAutoScreen
 import com.project.autofacil.ui.screens.AutoDetailScreen
 import com.project.autofacil.ui.screens.CotizacionScreen
+import com.project.autofacil.ui.screens.ListaUsuariosScreen
+import com.project.autofacil.ui.screens.LoginScreen
 import com.project.autofacil.ui.screens.MapaScreen
 
 @Composable
@@ -26,7 +29,7 @@ fun appNavigation(usuarioViewModel: UsuarioViewModel, autoViewModel: AutoViewMod
         startDestination = Screen.Home.route
     ) {
         composable(Screen.Home.route) {
-            AutosScreen(navController = navController, autoViewModel = autoViewModel)
+            AutosScreen(navController = navController, autoViewModel = autoViewModel, usuarioViewModel = usuarioViewModel)
         }
         composable(Screen.Registro.route) {
             registroScreen(navController, usuarioViewModel)
@@ -72,6 +75,22 @@ fun appNavigation(usuarioViewModel: UsuarioViewModel, autoViewModel: AutoViewMod
         }
         composable(Screen.Mapa.route) {
             MapaScreen()
+        }
+        composable(Screen.Login.route) {
+            LoginScreen(navController = navController, usuarioViewModel = usuarioViewModel)
+        }
+        composable(Screen.ListaUsuarios.route) {
+            ListaUsuariosScreen(
+                navController = navController,
+                usuarioViewModel = usuarioViewModel
+            )
+        }
+        composable(Screen.AgregarAuto.route) {
+            AgregarAutoScreen(
+                navController = navController,
+                autoViewModel = autoViewModel,
+                usuarioViewModel = usuarioViewModel
+            )
         }
     }
 }

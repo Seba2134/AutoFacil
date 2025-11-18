@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 
 @Database(
     entities = [AutoEntity::class, UsuarioEntity::class, CotizacionEntity::class],
-    version = 10, // Aumenta la versión para aplicar los nuevos campos
+    version = 13,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -50,8 +50,10 @@ abstract class AppDatabase : RoomDatabase() {
             super.onCreate(db)
             INSTANCE?.let { database ->
                 scope.launch(Dispatchers.IO) {
-                    // --- CORRECCIÓN 2: Llamar a la función con el nombre correcto ---
+                    // Pre-popular autos
                     prepopulate(database.autoDao())
+                    // Pre-popular usuario admin
+                    prepopulateUsuarios(database.usuarioDao())
                 }
             }
         }
@@ -110,6 +112,25 @@ suspend fun prepopulate(autoDao: AutoDao) {
         Log.d("ROOM_DEBUG", "Total autos en DB después del prepopulate(): $count")
     } catch (e: Exception) {
         Log.e("ROOM_DEBUG", "Error al insertar autos: ${e.message}")
+        e.printStackTrace()
+    }
+}
+suspend fun prepopulateUsuarios(usuarioDao: UsuarioDao) {
+    Log.d("ROOM_DEBUG", "Insertando usuario administrador por defecto...")
+
+    val admin = UsuarioEntity(
+        nombre = "Administrador",
+        correo = "admin@autofacil.cl",
+        contrasena = "admin123",
+        direccion = "Oficina central",
+        rol = "admin"
+    )
+
+    try {
+        usuarioDao.registrar(admin)
+        Log.d("ROOM_DEBUG", "Admin insertado correctamente")
+    } catch (e: Exception) {
+        Log.e("ROOM_DEBUG", "Error al insertar admin: ${e.message}")
         e.printStackTrace()
     }
 }

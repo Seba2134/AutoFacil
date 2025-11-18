@@ -48,5 +48,11 @@ class AutoViewModel(private val autoDao: AutoDao) : ViewModel() {
             }
         }
     }
-
+    fun agregarAuto(auto: AutoEntity) {
+        viewModelScope.launch {
+            autoDao.insertar(auto)
+            val lista = autoDao.obtenerTodos()
+            _autos.value = lista
+        }
+    }
 }

@@ -17,20 +17,23 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import com.project.autofacil.Model.Auto
 import com.project.autofacil.R
 import com.project.autofacil.ViewModels.AutoViewModel
+import com.project.autofacil.ViewModels.UsuarioViewModel
 import com.project.autofacil.navigation.Screen
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 //Añadimos NavController como parametro
-fun AutosScreen(navController: NavController, autoViewModel: AutoViewModel) {
+fun AutosScreen(navController: NavController, autoViewModel: AutoViewModel, usuarioViewModel: UsuarioViewModel) {
     val autos by autoViewModel.autos.collectAsState()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+    val cliente by usuarioViewModel.cliente.collectAsState()
 
     // Llamamos a cargarAutos cuando se entra a la pantalla
     LaunchedEffect(Unit) {
@@ -62,14 +65,6 @@ fun AutosScreen(navController: NavController, autoViewModel: AutoViewModel) {
                     }
                 )
                 NavigationDrawerItem(
-                    label = { Text("Perfil") },
-                    selected = false,
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                        navController.navigate(Screen.Profile.route)
-                    }
-                )
-                NavigationDrawerItem(
                     label = { Text("Sucursales cercanas") },
                     selected = false,
                     onClick = {
@@ -77,6 +72,56 @@ fun AutosScreen(navController: NavController, autoViewModel: AutoViewModel) {
                         navController.navigate(Screen.Mapa.route)
                     }
                 )
+                if (cliente == null) {
+                    NavigationDrawerItem(
+                        label = { Text("Iniciar sesión") },
+                        selected = false,
+                        onClick = {
+                            scope.launch { drawerState.close() }
+                            navController.navigate(Screen.Login.route)
+                        }
+                    )
+                }
+                if (cliente != null) {
+                    NavigationDrawerItem(
+                        label = { Text("Perfil") },
+                        selected = false,
+                        onClick = {
+                            scope.launch { drawerState.close() }
+                            navController.navigate(Screen.Profile.route)
+                        }
+                    )
+
+                    NavigationDrawerItem(
+                        label = { Text("Cerrar sesión") },
+                        selected = false,
+                        onClick = {
+                            usuarioViewModel.cerrarSesion()
+                            scope.launch { drawerState.close() }
+                            navController.navigate(Screen.Home.route)
+                        }
+                    )
+                }
+                if (cliente?.rol == "admin") {
+                    NavigationDrawerItem(
+                        label = { Text("Usuarios registrados") },
+                        selected = false,
+                        onClick = {
+                            scope.launch { drawerState.close() }
+                            navController.navigate(Screen.ListaUsuarios.route)
+                        }
+                    )
+                }
+                if (cliente?.rol == "admin") {
+                    NavigationDrawerItem(
+                        label = { Text("Agregar auto") },
+                        selected = false,
+                        onClick = {
+                            scope.launch { drawerState.close() }
+                            navController.navigate(Screen.AgregarAuto.route)
+                        }
+                    )
+                }
             }
         },
         gesturesEnabled = true
@@ -132,6 +177,7 @@ fun AutosScreen(navController: NavController, autoViewModel: AutoViewModel) {
                             anio = autoEntity.anio,
                             precio = autoEntity.precio,
                             fotoId = autoEntity.fotoId,
+                            fotoUri = autoEntity.fotoUri,
                             kilometraje = autoEntity.kilometraje
                         )
 
@@ -164,14 +210,25 @@ fun AutoCard(
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
-            Image(
-                painter = painterResource(id = auto.fotoId), // 'fotoId' es el ID del drawable
-                contentDescription = "${auto.marca} ${auto.modelo}",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(120.dp)
-            )
+            if (auto.fotoUri != null) {
+                AsyncImage(
+                    model = auto.fotoUri,
+                    contentDescription = "Foto del auto",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(180.dp),
+                    contentScale = ContentScale.Crop
+                )
+            } else {
+                Image(
+                    painter = painterResource(id = auto.fotoId),
+                    contentDescription = "Foto del auto",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(180.dp),
+                    contentScale = ContentScale.Crop
+                )
+            }
 
             // Contenedor para el texto y el botón
             Column(

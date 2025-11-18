@@ -19,5 +19,8 @@ sealed class Screen(val route: String) {
     }
 
     data object Mapa : Screen("mapa_screen")
+    data object Login : Screen("login_page")
+    data object ListaUsuarios : Screen("lista_usuarios")
+    data object AgregarAuto : Screen("agregar_auto")
 
 }

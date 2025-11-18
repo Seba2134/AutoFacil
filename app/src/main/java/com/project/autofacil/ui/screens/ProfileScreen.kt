@@ -35,6 +35,10 @@ fun ProfileScreen(
 ) {
     // Obtenemos el estado del usuario desde el ViewModel
     val estadoUsuario by viewModel.estado.collectAsState()
+    val cliente by viewModel.cliente.collectAsState()
+
+    val nombreMostrado = cliente?.nombre ?: estadoUsuario.nombre
+    val correoMostrado = cliente?.email ?: estadoUsuario.correo
 
     Scaffold(
         topBar = {
@@ -73,7 +77,7 @@ fun ProfileScreen(
 
             // Nombre del Usuario
             Text(
-                text = estadoUsuario.nombre,
+                text = nombreMostrado,
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold
             )
@@ -82,7 +86,7 @@ fun ProfileScreen(
 
             // Correo del Usuario
             Text(
-                text = estadoUsuario.correo,
+                text = correoMostrado,
                 style = MaterialTheme.typography.bodyLarge,
                 color = Color.Gray
             )
@@ -92,8 +96,9 @@ fun ProfileScreen(
             HorizontalDivider() // Un separador visual
 
             // Sección de información
-            InfoRow(icon = Icons.Default.Person, text = "Nombre: ${estadoUsuario.nombre}")
-            InfoRow(icon = Icons.Default.Email, text = "Correo: ${estadoUsuario.correo}")
+            InfoRow(icon = Icons.Default.Person, text = "Nombre: $nombreMostrado")
+            InfoRow(icon = Icons.Default.Email, text = "Correo: $correoMostrado")
+
 
             Spacer(modifier = Modifier.weight(1f)) // Empuja el botón hacia abajo
 

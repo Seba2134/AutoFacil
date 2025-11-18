@@ -11,7 +11,8 @@ data class Auto (
     val kilometraje: Int = 0,
     val precio: Int,
     val disponible: Boolean = true,
-    val fotoId: Int
+    val fotoId: Int,
+    val fotoUri: String? = null
 )
 {
     }

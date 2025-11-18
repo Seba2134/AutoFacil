@@ -30,11 +30,11 @@ class MainActivity : ComponentActivity() {
         val usuarioDao = db.usuarioDao()
         val autoDao = db.autoDao()
 
-        // 🔹 Creamos los ViewModels
+        //  Creamos los ViewModels
         val usuarioViewModel = UsuarioViewModel(usuarioDao)
         val autoViewModel = AutoViewModel(autoDao)
 
-        // 🔹 Renderizamos el contenido con Compose
+        // Renderizamos el contenido con Compose
         setContent {
             AutoFacilTheme {
                 Scaffold { innerPadding ->

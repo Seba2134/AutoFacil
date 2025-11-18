@@ -5,18 +5,23 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo_autofacil"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logo_autofacil_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AutoFacil">
+
+
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAkfkfLpNCabTgD_DQ015DWqDgTsdB2l50" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -24,10 +29,10 @@
             android:theme="@style/Theme.AutoFacil">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
+
+    </application> <!-- FIN DE LA CORRECCIÓN -->
 
 </manifest>
