@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AutoDao {
@@ -12,12 +13,15 @@ interface AutoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertar(auto: AutoEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertarAuto(auto: AutoEntity)
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertarVarios(autos: List<AutoEntity>)
 
 
     @Query("SELECT * FROM autos")
-    suspend fun obtenerTodos(): List<AutoEntity>
+    fun obtenerTodos(): Flow<List<AutoEntity>>
 
     @Query("SELECT COUNT(*) FROM autos")
     suspend fun contarAutos(): Int
