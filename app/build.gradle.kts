@@ -59,7 +59,8 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:18.2.0")
 
     implementation("io.coil-kt:coil-compose:2.7.0")
-
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -74,6 +75,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0-rc02")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.0-rc02")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
     // Room
     val room_version = "2.6.1"
@@ -82,7 +84,6 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
 
     // Coil para cargar imágenes desde URL
-    implementation("io.coil-kt:coil-compose:2.6.0")
 
     // Dependencias de Testing
     testImplementation(libs.junit)
