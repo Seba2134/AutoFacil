@@ -29,7 +29,7 @@ class AutoViewModelTest {
         // Usamos un dispatcher de test para controlar las corutinas
         Dispatchers.setMain(dispatcher)
 
-        // 👇 MUY IMPORTANTE: relaxed = true para que no explote por otras llamadas del ViewModel
+        // MUY IMPORTANTE: relaxed = true para que no explote por otras llamadas del ViewModel
         autoDao = mockk(relaxed = true)
 
         // Si en el init del ViewModel se llama a obtenerTodos(), devolvemos lista vacía por defecto
